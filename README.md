@@ -7,7 +7,7 @@
 ## ac 框架 目录结构
     ac                   WEB部署根目录
     ├─app                应用目录
-    │  ├─controller      控制器目录
+    │  ├─controllers     控制器目录
     │  ├─view            视图目录
     │  ├─models          模块目录
     │  ├─.htaccess       用于apache的重新写
