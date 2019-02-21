@@ -11,7 +11,7 @@
     │  ├─view            视图目录
     │  ├─models          模块目录
     │  ├─.htaccess       用于apache的重新写
-    │  ├─self.conf.php   项目配置
+    │  ├─config.php      项目配置
     │
     ├─core               核心目录
     │  ├─common          公共函数
