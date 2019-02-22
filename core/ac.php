@@ -91,7 +91,7 @@ class ac
         {
             exit($actionName . '方法不存在!');
         }
-
-        
+        // 如果控制器和操作名存在,则实例化控制器, 因为控制器在对象里面
+        $dispath = new $controller($controllerName, $actionName);
     }
 }
