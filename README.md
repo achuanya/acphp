@@ -14,7 +14,7 @@
     │  ├─config.php      项目配置
     │
     ├─core               核心目录
-    │  ├─common          公共函数
+    │  ├─base            MVC基类
     │  ├─lib             数据库操作类
     │  ├─logs            日志
     │  ├─ch.php          内核文件
