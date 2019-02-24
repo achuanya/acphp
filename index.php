@@ -1,4 +1,11 @@
-<?php 
+<?php
+
+/*
+ * @Description: 启动文件
+ * @author: 阿川 ahuan@achuan.io
+ * @Date: 2019-02-21 19:01:01
+ * @LastEditTime: 2019-02-24 16:43:21
+ */
 
 // 设置页面编码
 header('Content-type: text/html; charset=utf-8');
