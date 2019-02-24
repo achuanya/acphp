@@ -1,44 +1,58 @@
-<?php namespace ac;
-
-/**
- * 入口文件(index.php)调用配置文件(config.php)对框架做了两步操作, 
+<?php 
+namespace ac;
+/*
+ * @Description: 入口文件(index.php)调用配置文件(config.php)对框架做了两步操作, 
  * 实例化,调用run()方法, 实例化后接受了$config参数配置, 并保存到对象属性中
- * 
- * @author 阿川 <ahuan@achuan.io>
- * 2019-02-21 19:33
+ * @author: 阿川 ahuan@achuan.io
+ * @Date: 2019-02-21 19:01:01
+ * @LastEditTime: 2019-02-24 17:36:53
  */
 
-//  框架根目录
-define('CORE_PATH') or define('CORE_PATH', __DIR__);
+// 框架根目录
+defined('CORE_PATH') or define('CORE_PATH', __DIR__);
 
 /**
- * ac框架核心
+ * @Description: ac框架核心
+ * @author: 阿川 ahuan@achuan.io
+ * @Date: 2019-02-24 14:16:28
  */
 class ac
 {
     protected $config = [];
 
     /**
-     * 构造方法调用成员属性($config.php)
+     * @Description: 构造方法调用项目配置($config.php)
+     * @return: 调用数据库配置
+     * @author: 阿川 ahuan@achuan.io
+     * @Date: 2019-02-24 11:54:40
      */
     public function __construct()
     {
         $this->config = '$config';
     }
-
+    
     /**
-     * 运行程序
+     * @Description: 运行程序
+     * @return: 自动加载类
+     * @author: 阿川 ahuan@achuan.io
+     * @Date: 2019-02-24 11:51:17
      */
     public function run()
     {
         // 自动加载类
-        spl_autoload_register(array($this, 'loadClass'))
-
+        spl_autoload_register(array($this, 'loadClass'));
+        $this->setReporting();
+        $this->removeMagicQuotes();
+        $this->unregisterGlobals();
+        $this->setDbConfig();
+        $this->route();
     }
 
     /**
-     * 路由处理
-     * 获取路径信息->处理路径信息
+     * @Description: 路由处理
+     * @return: 获取路径信息->处理路径信息
+     * @author: 阿川 ahuan@achuan.io
+     * @Date: 2019-02-24 11:50:34
      */
     public function route()
     {
@@ -92,6 +106,159 @@ class ac
             exit($actionName . '方法不存在!');
         }
         // 如果控制器和操作名存在,则实例化控制器, 因为控制器在对象里面
+        // 因为还会用到控制器名和操作名，所以实例化的时候把他们俩的名称也传进去
         $dispath = new $controller($controllerName, $actionName);
+
+        // call_user_func_array（返回回调函数的结果，如果出错的话就返回false）
+        call_user_func_array(array($dispath, $actionName), $param);
     }
+        /**
+         * @Description: 检测开发环境
+         * @return: 设置报告所有错误并开启日志
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 11:55:09
+         */ 
+        public function setReporting()
+        {
+            if (APP_DEBUG === true)
+            {
+                // 设置报告所有PHP错误
+                error_reporting(E_ALL);
+                // 开启错误报告
+                ini_set('display_errors','On');
+            } else {
+                error_reporting(E_ALL);
+                ini_set('display_errors','Off');
+                ini_set('log_errors','On');
+            }
+        }
+        
+        /**
+         * @Description: 删除敏感字符
+         * @param {array} $value
+         * @return: 返回一个数组
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 11:55:55
+         */ 
+        public function stripSlashesDeep($value)
+        {
+            // 如果$vlaue为空，则返回一个数
+            $value = is_array($value) ? array_map(array($this, 'stripSlashesDeep'), $value) : stripSlashesDeep($value);
+            return $value
+        }
+        
+        /**
+         * @Description: 检测敏感字符并删除
+         * @return: 返回处理后的字符串
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 13:38:15
+         */
+        public function removeMagicQuotes()
+        {
+            // 对取来的数据进行判断，不要被magic_quotes_gpc转义过的字符串使用addslashes()
+            if (get_magic_quotes_gpc())
+            {
+                $_GET = isset($_GET) ? $this->stripSlashesDeep($_GET) : '';
+                $POST = isset($_POST) ? $this->stripSlashesDeep($_POST) : '';
+                $_COOKIE = isset($_COOKIE) ? $this->stripSlashesDeep($_COOKIE) : '';
+                $_SESSION = isset($_SESSION) ? $this->stripSlashesDeep($_SESSION) : '';
+            }
+        }
+
+        /**
+         * @Description: 检测自定义全局变量并移除，因为 register_globals 已经弃用
+         * 如果弃用的 register_globals 指令被设置为on，那么局部变量也将在脚本的全局作用域中可用
+         
+           示例：
+                $_POST['user'] 也将以 $user 的形势存在，这样写的话会影响代码的其他变量
+           参考：http://php.net/manual/zh/faq.using.php#faq.register-globals
+         
+           * @return: 删除自定义全局变量
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 15:29:44
+         */
+        public function unregisterGlobals()
+        {
+            if (ini_get('register_globals'))
+            {
+                $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+                foreach ($array as $value)
+                {
+                    foreach ($GLOBALS[$vlaue] as $key => $val)
+                    {
+                        if ($var === $GLOBALS[$key])
+                        {
+                            unset($GLOBALS[$key]);
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * @Description: 配置数据库信息 
+         * @return: 数据库信息
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 16:02:10
+         */
+        public function setDbConfig()
+        {
+            if ($this->config['db'])
+            {
+                define('DB_HOST', $this->config['db']['host']);
+                define('DB_NAME', $this->config['db']['dbname']);
+                define('DB_USER', $this->config['db']['username']);
+                define('DB_PASS', $this->config['db']['password']);
+            }
+        }
+        
+        /**
+         * @Description: 类的自动加载
+         * @param {class} $className
+         * @return: 类文件
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 16:12:16
+         */
+        public function loadClass($className)
+        {
+            $className = $this->classMap();
+
+            if (isset($classMap[$className]))
+            {
+                // 包涵内核文件
+                $file = $classMap[$className];
+                // 判断 $className '\\' 
+            } elseif (strpos($className,'\\') !== false)
+            {
+                // 包涵应用（application目录）文件
+                $file = APP-PATH . str_repeat('\\', '/', $className) . '.php';
+                // 判断一个文件名是否为正常的文件
+                if (!is_file($file))
+                {
+                    return;
+                }
+            } else
+            {
+                return;
+            }
+            include $file;
+        }
+        
+        /**
+         * @Description: 内核文件命名空间映射关系
+         * @return: 键值对（路径）
+         * @author: 阿川 ahuan@achuan.io
+         * @Date: 2019-02-24 16:29:46
+         */
+        protected function classMap()
+        {
+            return
+            [
+                'core\base\Controller' => CORE_PATH . '/base/Controller.php';
+                'core\base\Model' => CORE_PATH . '/base/Model.php';
+                'core\base\View' => CORE_PATH . '/base/View.php';
+                'core\lib\Pdo' => CORE_PATH . '/lib/Pdo.php';
+                'core\lib\Sql' => CORE_PATH . '/lib/Sql.php';
+            ]
+        }
 }
