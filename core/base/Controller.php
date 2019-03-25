@@ -13,8 +13,7 @@ namespace core\base;
  * @Date: 2019-02-24 17:13:29
  */
 
-class controller
-{
+class controller {
     protected $_controller;
     protected $_action;
     protected $_view;
@@ -26,11 +25,10 @@ class controller
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 17:19:59
      */
-    public function __construct($controller, $action)
-    {
+    public function __construct($controller, $action) {
         $this->_controller = $controller;
         $this->_action = $action;
-        $this->_view = new View($controller, $action)
+        $this->_view = new View($controller, $action);
     }
 
     /**
@@ -40,8 +38,7 @@ class controller
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 17:24:09
      */
-    public function assign($name, )
-    {
-           
+    public function assign($name,  $value) {
+
     }
 }

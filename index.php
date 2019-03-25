@@ -23,4 +23,4 @@ require(APP_PATH . 'core/ac.php');
 $config = require(APP_PATH . 'APP/config.php');
 
 // 实例化框架类
-(new core\ac\($config))->run();
+(new core\ac($config))->run();
