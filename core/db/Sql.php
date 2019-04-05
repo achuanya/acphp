@@ -56,11 +56,97 @@ class Sql {
 
     // 查询所有
     public function fetchAll() {
-        // $sql = sprintf(SELECT * FROM `%s` `%s`, $this->table, $this->filter);
-        // $sth = Db::pdo;
+        $sql = sprintf("SELECT * FROM `%s` `%s`", $this->table, $this->filter);
+        $sth = Db::pdo()->prepare($sql);
+        $sth = $this->formarParam($sth, $this->param);
+        $sth->execute();
+
+        return $sth->fetch();
     }
 
+    // 查询一条
+    public function fetch() {
+        $sql = sprintf("SELECT * FROM `%s` `%s`", $this->table, $this->filter);
+        $sth = Db::pdo()->prepare($sql);
+        $sth = $this->formatParam($sth, $this->param);
+        $sth->execute();
 
+        return $sth->fetch();
+    }
 
+    // 根据条件(ID)删除
+    public function delete($id) {
+        $sql = sprintf("DELETE FROM `%s` WHERE `%s` = :%s", $this->table, $this->primary, $this->primary);
+        $sth = Db::pdo()->prepare($sql);
+        $sth = $this->formatParam($sth, [$this->primary => $id]);
+        $sth->execute();
 
+        return $sth->rowCount();
+    }
+
+    // 新增数据
+    public function add($data) {
+        $sql = sprintf("INSERT INTO `%s` `%s`", $this->table, $this->primary);
+        $sth = Db::pdo()->prepare($sql);
+        $sth = $this->formatParam($sth, $data);
+        $sth = $this->formatParam($sth, $this->param);
+
+        return $sth->rowCount();
+    }
+
+    // 修改数据
+    public function update($data) {
+        $sql = sprintf("UPDATE `%s` set %s %s", $this->table, $this->formatUpdate($data), $this->filter);
+        $sth = Db::pdo()->prepare($sql);
+        $sth = $this->formatParam($sth, $data);
+        $sth = $this->formatParam($sth, $this->param);
+        $sth->execute();
+
+        return $sth->rowCount();
+    }
+
+    /**
+     * 占位符绑定具体的变量值
+     * @param PDOStatement $sth 要绑定的PDOStatement对象
+     * @param array $params 参数, 有三种类型:
+     * @return PDO/Statement
+
+     (1) 如果SQL语句用问号 ? 占位符, 那么$params应该为
+        ['a' => $a, 'b' => $b, 'c' => $c]
+            或者
+        [':a' => $a, ':b' => $b, ':c' => $c]
+
+     * @author 阿川 <achuan@achuan.io>
+     * @Time 2019/4/5 18:41
+     */
+    public function formatParam(PDOStatement $sth, $params = array()) {
+        foreach ($params as $param => &$value) {
+            $param = is_int($param) ? $param + 1 : ':' . ltrim($param, ':');
+            $sth->bingParam($param, $value);
+        }
+        return $sth;
+    }
+
+    // 将数组转换成插入格式的sql语句
+    private function formatInsert($data) {
+        $fields = array();
+        $names = array();
+        foreach ($data as $key => $value) {
+            $fields[] = sprintf("`%s`", $key);
+            $names[]  = sprintf(":s", $key);
+        }
+        $field = implode(',', $fields);
+        $name  = implode(',', $names);
+
+        return sprinft("(%s) value (%s)", $field, $name);
+    }
+
+    // 将数组转换成更新格式的sql语句
+    private function formatUpdate($data) {
+        $fields = array();
+        foreach ($data as $key => $value) {
+            $fields[] = sprinft("`%s` = :%s", $key, $key);
+        }
+        return implode(',', $fields);
+    }
 }
