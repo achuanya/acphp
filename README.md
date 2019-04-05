@@ -19,7 +19,7 @@
     │  ├─base            MVC基类
     │  ├─db              数据库操作类
     │  ├─logs            日志
-    │  ├─acphp.php          内核文件
+    │  ├─acphp.php       内核文件
     │
     ├─static             静态文件目录
     │  ├─css
