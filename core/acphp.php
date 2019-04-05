@@ -1,7 +1,7 @@
 <?php 
-namespace ac;
-/*
- * @Description: 入口文件(index.php)调用配置文件(config.php)对框架做了两步操作, 
+namespace acphp;
+/**
+ * 入口文件(index.php)调用配置文件(config.php)对框架做了两步操作,
  * 实例化,调用run()方法, 实例化后接受了$config参数配置, 并保存到对象属性中
  * @author: 阿川 ahuan@achuan.io
  * @Date: 2019-02-21 19:01:01
@@ -11,16 +11,16 @@ namespace ac;
 defined('CORE_PATH') or define('CORE_PATH', __DIR__);
 
 /**
- * @Description: ac框架核心
+ * acphp框架核心
  * @author: 阿川 ahuan@achuan.io
  * @Date: 2019-02-24 14:16:28
  */
-class ac {
+class acphp {
 
     protected $config = [];
 
     /**
-     * @Description: 构造方法调用项目配置($config.php)
+     * 构造方法调用项目配置($config.php)
      * @return: 调用数据库配置
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 11:54:40
@@ -30,7 +30,7 @@ class ac {
     }
     
     /**
-     * @Description: 运行程序
+     * 运行程序
      * @return: 自动加载类
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 11:51:17
@@ -46,7 +46,7 @@ class ac {
     }
 
     /**
-     * @Description: 路由处理
+     * 路由处理
      * @return: 获取路径信息->处理路径信息
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 11:50:34
@@ -106,7 +106,7 @@ class ac {
         call_user_func_array(array($dispath, $actionName), $param);
     }
     /**
-     * @Description: 检测开发环境
+     * 检测开发环境
      * @return: 设置报告所有错误并开启日志
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 11:55:09
@@ -125,7 +125,7 @@ class ac {
     }
 
     /**
-     * @Description: 删除敏感字符
+     * 删除敏感字符
      * @param {array} $value
      * @return: 返回一个数组
      * @author: 阿川 ahuan@achuan.io
@@ -138,7 +138,7 @@ class ac {
     }
 
     /**
-     * @Description: 检测敏感字符并删除
+     * 检测敏感字符并删除
      * @return: 返回处理后的字符串
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 13:38:15
@@ -154,7 +154,7 @@ class ac {
     }
 
     /**
-     * @Description: 检测自定义全局变量并移除，因为 register_globals 已经弃用
+     * 检测自定义全局变量并移除，因为 register_globals 已经弃用
      * 如果弃用的 register_globals 指令被设置为on，那么局部变量也将在脚本的全局作用域中可用
 
        示例：
@@ -180,7 +180,7 @@ class ac {
     }
 
     /**
-     * @Description: 配置数据库信息
+     * 配置数据库信息
      * @return: 数据库信息
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 16:02:10
@@ -195,7 +195,7 @@ class ac {
     }
         
     /**
-     * @Description: 类的自动加载
+     * 类的自动加载
      * @param {class} $className
      * @return: 类文件
      * @author: 阿川 ahuan@achuan.io
@@ -223,7 +223,7 @@ class ac {
 
 
     /**
-     * @Description: 内核文件命名空间映射关系
+     * 内核文件命名空间映射关系
      * @return: 键值对（路径）
      * @author: 阿川 ahuan@achuan.io
      * @Date: 2019-02-24 16:29:46
@@ -233,8 +233,8 @@ class ac {
             'core\base\Controller' => CORE_PATH . '/base/Controller.php',
             'core\base\Model' => CORE_PATH . '/base/Model.php',
             'core\base\View' => CORE_PATH . '/base/View.php',
-            'core\lib\Pdo' => CORE_PATH . '/lib/Pdo.php',
-            'core\lib\Sql' => CORE_PATH . '/lib/Sql.php',
+            'core\db\Pdo' => CORE_PATH . '/db/Pdo.php',
+            'core\db\Sql' => CORE_PATH . '/db/Sql.php',
         ];
     }
 }

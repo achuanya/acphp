@@ -17,10 +17,10 @@ define('APP_PATH', __DIR__ . '/');
 define('APP_DEBUG', true);
 
 // 加载框架文件
-require(APP_PATH . 'core/ac.php');
+require(APP_PATH . 'core/acphp.php');
 
 // 加载配置文件
-$config = require(APP_PATH . 'APP/config.php');
+$config = require(APP_PATH . 'app/config.php');
 
 // 实例化框架类
-(new core\ac($config))->run();
+(new core\acphp($config))->run();
