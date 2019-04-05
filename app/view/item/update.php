@@ -1,6 +1,1 @@
-<?php
-/**
- * Created by PhpStorm.
- * @author: 阿川 <achuan@achuan.io>
- * @Time: 2019/4/5 21:53
- */
+<a href="/item/index" class="big">成功修改<?php echo $count ?>项, 点击返回！</a>
