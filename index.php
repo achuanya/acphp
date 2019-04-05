@@ -1,10 +1,9 @@
 <?php
 
-/*
- * @Description: 启动文件
+/**
+ * 启动文件
  * @author: 阿川 ahuan@achuan.io
- * @Date: 2019-02-21 19:01:01
- * @LastEditTime: 2019-02-24 16:43:21
+ * @Time: 2019/02/21 19:01
  */
 
 // 设置页面编码
@@ -20,7 +19,7 @@ define('APP_DEBUG', true);
 require(APP_PATH . 'core/acphp.php');
 
 // 加载配置文件
-$config = require(APP_PATH . 'app/config.php');
+$config = require(APP_PATH . 'config/database.php');
 
 // 实例化框架类
 (new core\acphp($config))->run();
