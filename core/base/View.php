@@ -28,7 +28,7 @@ class View {
 
         $controllerHeader = APP_PATH . 'app/view/' . $this->_controller . 'header.php';
         $controllerFooter = APP_PATH . 'app/view/' . $this->_controller . 'footer.php';
-        $controllerLayout = APP_PATH . 'app/view/' . $this->_controller . '/' . $this->_action. '.php'
+        $controllerLayout = APP_PATH . 'app/view/' . $this->_controller . '/' . $this->_action. '.php';
 
         // 页头文件
         if (is_file($controllerHeader)) {
