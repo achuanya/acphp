@@ -140,8 +140,8 @@ class acphp {
     /**
      * 检测敏感字符并删除
      * @return: 返回处理后的字符串
-     * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 13:38:15
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/02/24 13:38
      */
     public function removeMagicQuotes() {
         // 对取来的数据进行判断，不要被magic_quotes_gpc转义过的字符串使用addslashes()
@@ -157,13 +157,13 @@ class acphp {
      * 检测自定义全局变量并移除，因为 register_globals 已经弃用
      * 如果弃用的 register_globals 指令被设置为on，那么局部变量也将在脚本的全局作用域中可用
 
-       示例：
-            $_POST['user'] 也将以 $user 的形势存在，这样写的话会影响代码的其他变量
-       参考：http://php.net/manual/zh/faq.using.php#faq.register-globals
+      示例：
+      $_POST['user'] 也将以 $user 的形势存在，这样写的话会影响代码的其他变量
+      参考：http://php.net/manual/zh/faq.using.php#faq.register-globals
 
      * @return: 删除自定义全局变量
-     * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 15:29:44
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/02/24 15:29
      */
     public function unregisterGlobals() {
         if (ini_get('register_globals')) {
@@ -182,8 +182,8 @@ class acphp {
     /**
      * 配置数据库信息
      * @return: 数据库信息
-     * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 16:02:10
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/02/24 16:02
      */
     public function setDbConfig() {
         if ($this->config['db']) {
@@ -193,13 +193,13 @@ class acphp {
             define('DB_PASS', $this->config['db']['password']);
         }
     }
-        
+
     /**
      * 类的自动加载
      * @param {class} $className
      * @return: 类文件
-     * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 16:12:16
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/02/24 16:12
      */
     public function loadClass($className) {
         $classMap = $this->classMap();
@@ -220,13 +220,12 @@ class acphp {
         include $file;
     }
 
-
-
     /**
      * 内核文件命名空间映射关系
+     * @return array
      * @return: 键值对（路径）
-     * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 16:29:46
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/02/24 16:29
      */
     protected function classMap() {
         return [

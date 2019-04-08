@@ -2,22 +2,23 @@
 namespace core\base;
 
 /**
- * @Description: 控制器基类
+ * 控制器基类
+ * Class controller
+ * @package core\base
  * @author: 阿川 ahuan@achuan.io
- * @Date: 2019-02-24 17:13:29
+ * @Time: 201902/24 17:13
  */
-
 class controller {
     protected $_controller;
     protected $_action;
     protected $_view;
 
     /**
-     * 构造函数，初始化属性，并实例化对应模型
-     * @param $controller, $action 
-     * @return: 实例化对象
+     * 构造函数, 初始化属性, 并实例化对应模型
+     * controller constructor.
+     * @param $controller $action
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 17:19:59
+     * @Time: 2019/2/24 17:33
      */
     public function __construct($controller, $action) {
         $this->_controller  = $controller;
@@ -37,7 +38,7 @@ class controller {
 
     /**
      * 渲染视图
-
+     
         Controller 类用 assign() 方法实现把变量保存到View对象中
         这样, 在调用 $this->render() 后视图文件就能显示这些变量
 

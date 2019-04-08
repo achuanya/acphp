@@ -4,7 +4,6 @@ namespace core\base;
 /**
  * 视图基类
  */
-
 class View {
     protected $variables = array();
     protected $_controller;
