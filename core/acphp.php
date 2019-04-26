@@ -88,7 +88,7 @@ class acphp {
         }
 
         // 判断控制器和操作名是否存在
-        $controller = 'app\\controllers\\' . $controllerName . 'Controller';
+        $controller = 'app\\controller\\' . $controllerName . 'Controller';
 
         // 判断控制器
         if (!class_exists($controller)) {
