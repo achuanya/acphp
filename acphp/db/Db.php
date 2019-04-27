@@ -1,5 +1,5 @@
 <?php
-namespace core\db;
+namespace acphp\db;
 
 use PDO;
 use PDOException;
@@ -12,7 +12,7 @@ use PDOException;
    数据库连接对象, 这是一种简单的单例模式
 
  * Class Db
- * @package core\db
+ * @package acphp\db
  */
 class Db {
     private static $pdo = null;

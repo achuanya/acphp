@@ -1,8 +1,13 @@
 <?php
-namespace core\db\Sql;
+namespace acphp\db\Sql;
 
-use core\db\Sql;
+use acphp\db\Sql;
 
+/**
+ * Model基类
+ * Class Model
+ * @package acphp\db\Sql
+ */
 class Model extends Sql {
     protected $model;
 

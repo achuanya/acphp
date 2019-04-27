@@ -1,9 +1,14 @@
 <?php
 
-namespace core\db;
+namespace acphp\db;
 
 use \PDOStatement;
 
+/**
+ * 数据库基类 Sql
+ * Class Sql
+ * @package acphp\db
+ */
 class Sql {
     // 数据库表名
     protected $table;
@@ -19,13 +24,14 @@ class Sql {
 
     /**
      * 查询条件拼接, 使用方式
-     *
-     * this->where(['id = 1', 'and title = "Web"', ...])->fetch();
-     * 为了防止注入, 建议通过 $param 方式传入参数:
-     * $this->where(['id = :id'], [':id => $id'])->fetch();
-     *
-     * @param: array $where 条件
-     * @return: $this 当前对象
+
+      this->where(['id = 1', 'and title = "Web"', ...])->fetch();
+      为了防止注入, 建议通过 $param 方式传入参数:
+      $this->where(['id = :id'], [':id => $id'])->fetch();
+
+     * @param array $where 条件
+     * @param array $param
+     * @return $this
      * @author: 阿川 <achuan@achuan.io>
      * @Time: 2019/4/5 17:10
      */
@@ -40,7 +46,10 @@ class Sql {
     }
 
     /**
-     *
+     * 拼装排序条件，使用方式
+
+     $this->order(['id DESC', 'title ASC',])->fetch();
+
      * @param array $order 排序条件
      * @return $this
      * @author: 阿川 <achuan@achuan.io>
@@ -54,7 +63,13 @@ class Sql {
         return $this;
     }
 
-    // 查询所有
+
+    /**
+     * 查询所有
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:30
+     */
     public function fetchAll() {
         $sql = sprintf("SELECT * FROM `%s` `%s`", $this->table, $this->filter);
         $sth = Db::pdo()->prepare($sql);
@@ -64,7 +79,12 @@ class Sql {
         return $sth->fetch();
     }
 
-    // 查询一条
+    /**
+     * 查询一条
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:30
+     */
     public function fetch() {
         $sql = sprintf("SELECT * FROM `%s` `%s`", $this->table, $this->filter);
         $sth = Db::pdo()->prepare($sql);
@@ -74,7 +94,13 @@ class Sql {
         return $sth->fetch();
     }
 
-    // 根据条件(ID)删除
+    /**
+     * 根据条件(ID)删除
+     * @param $id
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:30
+     */
     public function delete($id) {
         $sql = sprintf("DELETE FROM `%s` WHERE `%s` = :%s", $this->table, $this->primary, $this->primary);
         $sth = Db::pdo()->prepare($sql);
@@ -84,7 +110,13 @@ class Sql {
         return $sth->rowCount();
     }
 
-    // 新增数据
+    /**
+     * 新增数据
+     * @param $data
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:31
+     */
     public function add($data) {
         $sql = sprintf("INSERT INTO `%s` `%s`", $this->table, $this->primary);
         $sth = Db::pdo()->prepare($sql);
@@ -94,7 +126,13 @@ class Sql {
         return $sth->rowCount();
     }
 
-    // 修改数据
+    /**
+     * 修改数据
+     * @param $data
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:31
+     */
     public function update($data) {
         $sql = sprintf("UPDATE `%s` set %s %s", $this->table, $this->formatUpdate($data), $this->filter);
         $sth = Db::pdo()->prepare($sql);
@@ -106,18 +144,18 @@ class Sql {
     }
 
     /**
-     * 占位符绑定具体的变量值
+     *
      * @param PDOStatement $sth 要绑定的PDOStatement对象
      * @param array $params 参数, 有三种类型:
-     * @return PDO/Statement
 
-     (1) 如果SQL语句用问号 ? 占位符, 那么$params应该为
-        ['a' => $a, 'b' => $b, 'c' => $c]
-            或者
-        [':a' => $a, ':b' => $b, ':c' => $c]
+    (1) 如果SQL语句用问号 ? 占位符, 那么$params应该为
+    ['a' => $a, 'b' => $b, 'c' => $c]
+    或者
+    [':a' => $a, ':b' => $b, ':c' => $c]
 
-     * @author 阿川 <achuan@achuan.io>
-     * @Time 2019/4/5 18:41
+     * @return PDOStatement
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/5 18:41
      */
     public function formatParam(PDOStatement $sth, $params = array()) {
         foreach ($params as $param => &$value) {
@@ -127,7 +165,13 @@ class Sql {
         return $sth;
     }
 
-    // 将数组转换成插入格式的sql语句
+    /**
+     * 将数组转换成插入格式的sql语句
+     * @param $data
+     * @return mixed
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:34
+     */
     private function formatInsert($data) {
         $fields = array();
         $names = array();
@@ -141,7 +185,13 @@ class Sql {
         return sprinft("(%s) value (%s)", $field, $name);
     }
 
-    // 将数组转换成更新格式的sql语句
+    /**
+     * 将数组转换成更新格式的sql语句
+     * @param $data
+     * @return string
+     * @author: 阿川 <achuan@achuan.io>
+     * @Time: 2019/4/27 21:34
+     */
     private function formatUpdate($data) {
         $fields = array();
         foreach ($data as $key => $value) {

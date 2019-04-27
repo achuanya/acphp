@@ -3,8 +3,6 @@ namespace acphp;
 /**
  * 入口文件(index.php)调用配置文件(config.php)对框架做了两步操作,
  * 实例化,调用run()方法, 实例化后接受了$config参数配置, 并保存到对象属性中
- * @author: 阿川 ahuan@achuan.io
- * @Date: 2019-02-21 19:01:01
  */
 
 // 框架根目录
@@ -12,10 +10,10 @@ defined('CORE_PATH') or define('CORE_PATH', __DIR__);
 
 /**
  * acphp框架核心
- * @author: 阿川 ahuan@achuan.io
- * @Date: 2019-02-24 14:16:28
+ * Class acphp
+ * @package acphp
  */
-class acphp {
+class Acphp {
 
     protected $config = [];
 
@@ -23,7 +21,7 @@ class acphp {
      * 构造方法调用项目配置($config.php)
      * @return: 调用数据库配置
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 11:54:40
+     * @Time: 2019/2/24 11:54:40
      */
     public function __construct() {
         $this->config = '$config';
@@ -33,7 +31,7 @@ class acphp {
      * 运行程序
      * @return: 自动加载类
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 11:51:17
+     * @Time: 2019/2/24 11:51:17
      */
     public function run() {
         // 自动加载类
@@ -49,7 +47,7 @@ class acphp {
      * 路由处理
      * @return: 获取路径信息->处理路径信息
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 11:50:34
+     * @Time: 2019/2/24 11:50:34
      */
     public function route() {
         // 调用控制器
@@ -109,7 +107,7 @@ class acphp {
      * 检测开发环境
      * @return: 设置报告所有错误并开启日志
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 11:55:09
+     * @Time: 2019/2/24 11:55:09
      */
     public function setReporting() {
         if (APP_DEBUG === true) {
@@ -129,7 +127,7 @@ class acphp {
      * @param {array} $value
      * @return: 返回一个数组
      * @author: 阿川 ahuan@achuan.io
-     * @Date: 2019-02-24 11:55:55
+     * @Time: 2019/2/24 11:55:55
      */
     public function stripSlashesDeep($value) {
         // 如果$vlaue为空，则返回一个数
@@ -141,7 +139,7 @@ class acphp {
      * 检测敏感字符并删除
      * @return: 返回处理后的字符串
      * @author: 阿川 <achuan@achuan.io>
-     * @Time: 2019/02/24 13:38
+     * @Time: 2019/2/24 13:38
      */
     public function removeMagicQuotes() {
         // 对取来的数据进行判断，不要被magic_quotes_gpc转义过的字符串使用addslashes()
@@ -229,11 +227,11 @@ class acphp {
      */
     protected function classMap() {
         return [
-            'core\base\Controller' => CORE_PATH . '/base/Controller.php',
-            'core\base\Model' => CORE_PATH . '/base/Model.php',
-            'core\base\View' => CORE_PATH . '/base/View.php',
-            'core\db\Pdo' => CORE_PATH . '/db/Pdo.php',
-            'core\db\Sql' => CORE_PATH . '/db/Sql.php',
+            'acphp\base\Controller' => CORE_PATH . '/base/Controller.php',
+            'acphp\base\Model' => CORE_PATH . '/base/Model.php',
+            'acphp\base\View' => CORE_PATH . '/base/View.php',
+            'acphp\db\Pdo' => CORE_PATH . '/db/Pdo.php',
+            'acphp\db\Sql' => CORE_PATH . '/db/Sql.php',
         ];
     }
 }

@@ -6,6 +6,7 @@
  * @Time: 2019/02/21 19:01
  */
 
+
 // 设置页面编码
 header('Content-type: text/html; charset=utf-8');
 
@@ -16,10 +17,10 @@ define('APP_PATH', __DIR__ . '/');
 define('APP_DEBUG', true);
 
 // 加载框架文件
-require(APP_PATH . 'core/acphp.php');
+require(APP_PATH . 'acphp/Acphp.php');
 
 // 加载配置文件
 $config = require(APP_PATH . 'config/database.php');
 
 // 实例化框架类
-(new core\acphp($config))->run();
+(new acphp\Acphp($config))->run();
