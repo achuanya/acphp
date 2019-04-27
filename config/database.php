@@ -7,9 +7,9 @@
  */
 
 // 数据库配置信息
-$config['db']['host'] = 'localhost';
-$config['db']['username'] = 'achuan';
-$config['db']['password'] = '200529';
+$config['db']['host'] = '127.0.0.1';
+$config['db']['username'] = 'root';
+$config['db']['password'] = 'achuan0529';
 $config['db']['dbname'] = 'project';
 
 // 默认的控制器和操作名
