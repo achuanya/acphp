@@ -34,17 +34,8 @@
 下述规则是为了程序能更好的相互调用！
 
    1.Mysql的表明需**小写**。
-   2.模块名（Model）需要名[**大驼峰**][3]命名，既首字母**大写**。
-   3.控制器（Controller）需要名[**大驼峰**][3]命名，既首字母**大写**。
-   4.方法名（Action）需要用[**小驼峰**][3]命名法。
-   5.视图（View）部署结构为**控制器名-行为名**，如：paging-paging.php。
-
-## 
-
-
-
-
-
-[1]: http://www.ruanyifeng.com/blog/2007/11/mvc.html
-[2]: https://www.awaimai.com/128.html
-[3]: https://www.kancloud.cn/kancloud/lua_style_guide/66327
+   2.模块名`Model`需要名**大驼峰**3命名，既首字母**大写**。
+   3.控制器`Controller`需要名**大驼峰**命名，既首字母**大写**。
+   4.方法名`Action`需要用**小驼峰**命名法。
+   5.视图`View`部署结构为**控制器名-行为名**，  
+   如：`paging-paging.php`
