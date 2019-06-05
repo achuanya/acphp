@@ -73,7 +73,7 @@ class Sql {
     public function fetchAll() {
         $sql = sprintf("SELECT * FROM `%s` `%s`", $this->table, $this->filter);
         $sth = Db::pdo()->prepare($sql);
-        $sth = $this->formarParam($sth, $this->param);
+        $sth = $this->formatparam($sth, $this->param);
         $sth->execute();
 
         return $sth->fetch();
@@ -160,7 +160,7 @@ class Sql {
     public function formatParam(PDOStatement $sth, $params = array()) {
         foreach ($params as $param => &$value) {
             $param = is_int($param) ? $param + 1 : ':' . ltrim($param, ':');
-            $sth->bingParam($param, $value);
+            $sth->bindParam($param, $value);
         }
         return $sth;
     }

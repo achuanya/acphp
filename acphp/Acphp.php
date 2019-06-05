@@ -23,8 +23,8 @@ class Acphp {
      * @author: 阿川 ahuan@achuan.io
      * @Time: 2019/2/24 11:54:40
      */
-    public function __construct() {
-        $this->config = '$config';
+    public function __construct($config) {
+        $this->config = $config;
     }
     
     /**

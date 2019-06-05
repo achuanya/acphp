@@ -12,7 +12,7 @@
     │  ├─model           模块目录
     │
     ├─config             项目配置
-    │  ├─database.php    数据库配置文件
+    │  ├─config.php      数据库配置文件
     │
     ├─acphp              核心目录
     │  ├─base            MVC基类
