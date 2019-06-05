@@ -1,5 +1,5 @@
 <?php
-namespace acphp\db\Sql;
+namespace acphp\base;
 
 use acphp\db\Sql;
 

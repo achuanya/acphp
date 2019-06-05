@@ -6,10 +6,10 @@ use acphp\db\Db;
 
 /**
  * 用户 Model
- * Class ItemModel
+ * Class Item
  * @package app\model
  */
-class ItemModel extends Model {
+class Item extends Model {
     /**
      * 自定义当前模型操作的数据库表名称，
      * 如果不指定，默认为类名称的小写字符串，

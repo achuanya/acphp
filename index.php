@@ -20,7 +20,7 @@ define('APP_DEBUG', true);
 require(APP_PATH . 'acphp/Acphp.php');
 
 // 加载配置文件
-$config = require(APP_PATH . 'config/database.php');
+$config = require(APP_PATH . 'config/config.php');
 
 // 实例化框架类
 (new acphp\Acphp($config))->run();

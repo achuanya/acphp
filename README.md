@@ -10,7 +10,6 @@
     │  ├─controller      控制器目录
     │  ├─view            视图目录
     │  ├─model           模块目录
-    │  ├─.htaccess       用于apache的重新写
     │
     ├─config             项目配置
     │  ├─database.php    数据库配置文件
@@ -27,8 +26,11 @@
     │  ├─images
     │  ├─js
     │
-    ├─index.php          入口文件
-    ├─README.md          自述
+    ├─.gitignore
+    ├─.htaccess         用于apache的重新写
+    ├─LICENSE           MIT许可证
+    ├─index.php         入口文件
+    ├─README.md         自述
 
 ## 代码规范
 下述规则是为了程序能更好的相互调用！

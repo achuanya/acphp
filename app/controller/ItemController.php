@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use acphp\base\Controller;
-use app\model\ItemModel;
+use app\model\Item;
 
 /**
  * 用户 Controller
@@ -19,12 +19,13 @@ class ItemController extends Controller {
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 
         if ($keyword) {
-            $items = (new ItemModel())->search($keyword);
+            $items = (new Item())->search($keyword);
         } else {
             // 查询所有内容，并按倒序排列输出
             // where() 方法不传入参数，或者省略
-            $items = (new ItemModel)->where()->order(['id DESC'])->fetchAll();
+            $items = (new Item)->where()->order(['id DESC'])->fetchAll();
         }
+
         $this->assign('title', '全部条目');
         $this->assign('keyword', $keyword);
         $this->assign('items', $items);
@@ -39,7 +40,7 @@ class ItemController extends Controller {
      */
     public function detail($id) {
         // 通过？占位符传入$id参数
-        $item = (new ItemModel())->where(["id = ?"], [$id])->fetch();
+        $item = (new Item())->where(["id = ?"], [$id])->fetch();
 
         $this->assign('title', '管理条目');
         $this->assign('item', $item);
@@ -53,7 +54,7 @@ class ItemController extends Controller {
      */
     public function add() {
         $data['item_name'] = $_POST['value'];
-        $count = (new ItemModel)->add($data);
+        $count = (new Item)->add($data);
 
         $this->assign('title',  '添加成功');
         $this->assign('count', $count);
@@ -70,7 +71,7 @@ class ItemController extends Controller {
         $item = array();
         if ($id) {
             // 通过名称占位符传入参数
-            $item = (new ItemModel())->where(["id = :id"], [':id => $id'])->fetch();
+            $item = (new Item())->where(["id = :id"], [':id => $id'])->fetch();
         }
         $this->assign('title', '管理条目');
         $this->assign('item', $item);
@@ -84,7 +85,7 @@ class ItemController extends Controller {
      */
     public function update() {
         $data  = array('id' => $_POST['id'], 'item_name' => $_POST['value']);
-        $count = (new ItemModel)->where(['id = :id'], [':id' => $data['id']])->updata($data);
+        $count = (new Item)->where(['id = :id'], [':id' => $data['id']])->updata($data);
 
         $this->assign('title', '修改成功');
         $this->assign('count', $count);
@@ -98,7 +99,7 @@ class ItemController extends Controller {
      * @Time: 2019/4/27 22:56
      */
     public function delete($id = null) {
-        $count = (new ItemModel)->delete($id);
+        $count = (new Item)->delete($id);
 
         $this->assign('title' ,'删除成功');
         $this->assgin('count', $count);
